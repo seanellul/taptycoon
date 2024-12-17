@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Header extends StatelessWidget {
   final String title;
@@ -35,6 +36,28 @@ class CustomButton extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         foregroundColor: Colors.white,
         textStyle: TextStyle(fontSize: 18),
+      ),
+      child: child,
+    );
+  }
+}
+
+class TapButton extends StatelessWidget {
+  final Widget child; // Accepts any widget: Text, Icon, etc.
+  final VoidCallback onPressed;
+  final Color color;
+  const TapButton({required this.child, required this.onPressed, required this.color});
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        padding: EdgeInsets.symmetric(horizontal: 80, vertical: 120),
+        foregroundColor: Colors.white,
+        backgroundColor: color,
+        textStyle: GoogleFonts.pressStart2p(
+            fontSize: 45, fontWeight: FontWeight.bold, color: Colors.white),
       ),
       child: child,
     );

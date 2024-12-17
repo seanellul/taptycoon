@@ -1,48 +1,38 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:fm/data/shop_item.dart';
 
 class ContextProvider extends ChangeNotifier {
-  int _day = 0;
+  int taps = 3000;
+  Color color = Colors.blue;
+  int colorIndex = 0;
+  int multiplier = 1;
+  int actualTaps = 0;
 
-  int get day => _day;
-  int get dayNumber => _day + 1;
-  int get teamSize => _team.length;
-  List<Map<String, String>> get team => _team;
+  void registerTap() {
+    incrementTap();
+    changeColor();
+  }
 
-  void incrementDay() {
-    _day++;
+  void incrementTap() {
+    print(multiplier);
+    actualTaps++;
+    taps = taps + (1 * multiplier);
     notifyListeners();
-  } 
+  }
 
-  final List<Map<String, String>> _team = [
-    {
-      "name": "Lionel Messi",
-      "nationality": "Argentina",
-      "age": "36",
-      "position": "Forward"
-    },
-    {
-      "name": "Cristiano Ronaldo",
-      "nationality": "Portugal",
-      "age": "38",
-      "position": "Forward"
-    },
-    {
-      "name": "Kevin De Bruyne",
-      "nationality": "Belgium",
-      "age": "32",
-      "position": "Midfielder"
-    },
-    {
-      "name": "Virgil van Dijk",
-      "nationality": "Netherlands",
-      "age": "32",
-      "position": "Defender"
-    },
-    {
-      "name": "Alisson Becker",
-      "nationality": "Brazil",
-      "age": "31",
-      "position": "Goalkeeper"
-    },
-  ];
+  void changeColor() {
+    colorIndex = (colorIndex + 1) % Colors.primaries.length;
+    color = Colors.primaries[colorIndex];
+    notifyListeners();
+  }
+
+  void buyItem(ShopItem item) {
+    if (item.tapPrice <= taps) {
+      taps -= item.tapPrice;
+      multiplier = multiplier + item.multiplier;
+      notifyListeners();
+    }
+  }
 }
